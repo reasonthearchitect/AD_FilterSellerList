@@ -1,0 +1,25 @@
+server:
+  port: 8940
+
+---
+spring:
+  profiles:
+    active: dev
+  application:
+    name: filtersellerlist
+  cloud:
+    config:
+      enabled: false
+
+---
+server:
+  port: 8940 
+spring:
+  profiles:
+    active: prod
+  application:
+    name: filtersellerlist
+  cloud:
+    config:
+      enabled: true
+      uri: http://config.reasonthearchitect.com

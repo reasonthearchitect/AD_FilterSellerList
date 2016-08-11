@@ -1,0 +1,11 @@
+{
+  "generator-spring-rest": {
+    "baseName": "filtersellerlist",
+    "packageName": "com.rta.filtersellerlist",
+    "packageNameGenerated": "com.rta.filtersellerlist.generated",
+    "dockerrootrepo": "reasonthearchitect/filtersellerlist",
+    "zookeeperurl": "127.0.0.1",
+    "kafkaurl": "127.0.0.1",
+    "configserverurl": "http://config.reasonthearchitect.com"
+  }
+}

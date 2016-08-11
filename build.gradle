@@ -1,0 +1,83 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath group: 'org.springframework.boot',  name: 'spring-boot-gradle-plugin',      version: spring_boot_version
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1"
+    }
+}
+
+plugins {
+  id "java"
+  id "jacoco"
+  id "org.sonarqube" version "1.2"
+}
+
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR3'
+    }
+}
+
+test {
+  jacoco {
+    excludes += ['**.generated.**']
+  }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "filtersellerlist"
+
+        property "sonar.projectKey", "org.sonarqube:java-filtersellerlist-gradle"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.exclusions", "**/generated/**,**/Application.java"
+        property "sonar.sources", "src/main/java,src/main/groovy"
+        property "sonar.tests", "src/test/groovy"
+        property "sonar.binaries", "build/classes"
+    }
+}
+
+
+configurations {
+  all*.exclude group: 'commons-logging'
+}
+
+apply from: 'gradle/conf/boot.gradle'
+apply from: 'gradle/conf/groovy.gradle'
+apply from: 'gradle/conf/ide.gradle'
+apply from: 'gradle/conf/jackson.gradle'
+apply from: 'gradle/conf/lombok.gradle'
+apply from: 'gradle/conf/meta.gradle'
+apply from: 'gradle/conf/metrics.gradle'
+apply from: 'gradle/conf/spring-cloud.gradle'
+apply from: 'gradle/conf/streams.gradle'
+apply from: 'gradle/conf/utils.gradle'
+apply from: 'gradle/conf/websockets.gradle'
+
+apply from: 'gradle/conf/test/integration.gradle'
+apply from: 'gradle/conf/test/unit.gradle'
+apply from: 'gradle/conf/test/jbehave.gradle'
+apply from: 'gradle/conf/test/restassured.gradle'
+
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
+clean {
+    delete "target"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
+
+task stage(dependsOn: 'bootRepackage') {
+}

@@ -1,0 +1,45 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+
+jar{
+    baseName = 'filtersellerlist'
+    version = '0.0.1-SNAPSHOT'
+    description = ''
+}
+
+defaultTasks 'bootRun'
+
+bootRepackage {
+   mainClass = 'com.rta.filtersellerlist.Application'
+}
+
+springBoot {
+    mainClass = 'com.rta.filtersellerlist.Application'
+}
+
+bootRun {
+    addResources = false
+}
+
+configurations {
+    all*.exclude module : 'spring-boot-starter-logging'
+}
+
+dependencies {
+	compile group: 'org.springframework.boot',      name: 'spring-boot-actuator'
+    compile group: 'org.springframework.boot',      name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.boot',      name: 'spring-boot-autoconfigure'
+    compile group: 'org.springframework.boot',      name: 'spring-boot-loader-tools'
+    compile group: 'org.springframework.boot',      name: 'spring-boot-starter-logging'
+    compile group: 'org.springframework.boot',      name: 'spring-boot-starter-aop'
+    compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('org.springframework.boot:spring-boot-starter-log4j')
+    compile ('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+
+    compile(group: 'org.springframework',           name: 'spring-context-support') {
+        exclude(module: 'quartz')
+    }
+}

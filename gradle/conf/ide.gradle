@@ -1,0 +1,29 @@
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+configurations {
+    provided
+}
+
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+        testSourceDirs += file('src/jbehave/java')
+        testSourceDirs += file('src/jbehave/groovy')
+        testSourceDirs += file('src/jbehave/stories')
+        testSourceDirs += file('src/integration/groovy')
+        testSourceDirs += file('src/functional/groovy')
+    }
+}
+
+configurations {
+    providedRuntime
+}
+
+eclipse {
+    classpath {
+         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
+}
