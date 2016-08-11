@@ -40,7 +40,7 @@ sonarqube {
         property "sonar.projectKey", "org.sonarqube:java-filtersellerlist-gradle"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
         property "sonar.exclusions", "**/generated/**,**/Application.java"
-        property "sonar.sources", "src/main/java,src/main/groovy"
+        property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/groovy"
         property "sonar.binaries", "build/classes"
     }
