@@ -55,8 +55,6 @@ public class FilterSellerRest {
         ResponseFilteredSellerLIstDto responseFilteredSellerLIstDto = new ResponseFilteredSellerLIstDto();
         responseFilteredSellerLIstDto.setCars(this.carStoreService.getForObject(this.carStoreUrl, ((Class<ArrayList<Car>>) (Object) ArrayList.class), name));
         doHighestBid(responseFilteredSellerLIstDto);
-
-
         return new ResponseEntity<>(responseFilteredSellerLIstDto, new HttpHeaders(), HttpStatus.OK);
     }
 

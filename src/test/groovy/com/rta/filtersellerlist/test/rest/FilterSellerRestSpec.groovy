@@ -1,5 +1,6 @@
 package com.rta.filtersellerlist.test.rest
 
+import com.rta.filtersellerlist.dto.Car
 import com.rta.filtersellerlist.rest.FilterSellerRest
 
 import org.springframework.http.HttpStatus
@@ -16,7 +17,7 @@ class FilterSellerRestSpec extends Specification {
         this.filterSellerRest        = new FilterSellerRest();
     }
 
-    def "simple test for the rest endpoint"() {
+    def "get seller list with no cars"() {
 
         setup:
         RestTemplate carStoreService = Mock(RestTemplate)
@@ -26,8 +27,10 @@ class FilterSellerRestSpec extends Specification {
         ResponseEntity responseEntity = this.filterSellerRest.getMyCarsforSale("Bob");
 
         then:
-        1 * carStoreService.getForObject(_, _, _);
+        1 * carStoreService.getForObject(_, _, _) >> new ArrayList<Car>();
         responseEntity != null;
         responseEntity.getStatusCode() == HttpStatus.OK;
+        responseEntity.getBody().getCars() != null;
+        responseEntity.getBody().getHighestBidMap() != null;
     }
 }
